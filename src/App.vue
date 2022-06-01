@@ -48,7 +48,7 @@ import TodoListItem from "./components/TodoListItem.vue";
 import SummaryLine from "./components/SummaryLine.vue"
 import ProjectList from "@/components/ProjectList";
 import {ADD_TASK, SET_ONLY_PENDING, UPDATE_TASK} from "@/store/mutation-types";
-import { mapGetters, mapState} from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: "App",
