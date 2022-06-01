@@ -48,6 +48,7 @@ import TodoListItem from "./components/TodoListItem.vue";
 import SummaryLine from "./components/SummaryLine.vue"
 import ProjectList from "@/components/ProjectList";
 import {ADD_TASK, SET_ONLY_PENDING, UPDATE_TASK} from "@/store/mutation-types";
+import { mapGetters, mapState} from 'vuex';
 
 export default {
   name: "App",
@@ -62,13 +63,19 @@ export default {
     return {};
   },
   computed: {
-    projects() {
-      return this.$store.getters.projectsWithStats;
-    },
-    tasks() {
-      //return this.$store.state.tasks;
-      return this.$store.getters.activeProject?.tasks ?? [];
-    },
+    ...mapState(["activeProjectId"]),
+    ...mapGetters({
+      projects: "projectsWithStats",
+      //activeProject: "activeProject",
+      tasks: "activeProjectTasks",
+    }),
+    // projects() {
+    //   return this.$store.getters.projectsWithStats;
+    // },
+    // tasks() {
+    //   //return this.$store.state.tasks;
+    //   return this.activeProject?.tasks ?? [];
+    // },
     displayedTasks() {
       return [...this.tasks]
           .sort((a, b) => Number(b.priority) - Number(a.priority))
