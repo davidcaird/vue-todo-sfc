@@ -1,7 +1,16 @@
-﻿export const localStoragePlugin = (store) => {
+﻿const KEY = 'todo-vuex-storage';
+
+export const localStoragePlugin = (store) => {
     console.log('Plugin was initialised');
+    store.replaceState(
+        Object.assign(
+            store.state,
+            JSON.parse(window.localStorage.getItem(KEY))
+        )
+    );
     
-    store.subscribe((mutation) => {
+    store.subscribe((mutation, state) => {
         console.log(mutation);
+        window.localStorage.setItem(KEY, JSON.stringify(state))
     });
 }

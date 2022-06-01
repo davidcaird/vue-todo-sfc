@@ -47,6 +47,7 @@ import AddTaskInput from "./components/AddTaskInput.vue";
 import TodoListItem from "./components/TodoListItem.vue";
 import SummaryLine from "./components/SummaryLine.vue"
 import ProjectList from "@/components/ProjectList";
+import {ADD_TASK, SET_ONLY_PENDING, UPDATE_TASK} from "@/store/mutation-types";
 
 export default {
   name: "App",
@@ -78,16 +79,17 @@ export default {
         return this.$store.state.onlyPending;
       },
       set(newValue) {
-        this.$store.commit('setOnlyPending', newValue)
+        this.$store.commit(SET_ONLY_PENDING, newValue)
       }
     },
     activeProjectId() {
-      return this.$store.activeProjectId;
+      console.log('App activeProjectId');
+      return this.$store.state.activeProjectId;
     }
   },
   methods: {
     taskAdded(task) {
-      this.$store.commit("addTask", {
+      this.$store.commit(ADD_TASK, {
         projectId: this.activeProjectId,
         task: {
           id: nextTaskId++,
@@ -98,7 +100,7 @@ export default {
       });
     },
     taskUpdated(task, changes) {
-      this.$store.commit("updateTask", {
+      this.$store.commit(UPDATE_TASK, {
         projectId: this.activeProjectId,
         task: Object.assign(task, changes)
       });
