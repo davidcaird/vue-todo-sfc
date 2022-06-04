@@ -2,7 +2,7 @@
   <div class="flex item-center">
     <input
       type="checkbox"
-      class="h-4 w-4 text-indigo-600 border-gray-300 rounded mr-2"
+      class="flex-none h-4 w-4 text-indigo-600 border-gray-300 rounded mr-2"
       :checked="modelValue"
       @change="onChange"
     />

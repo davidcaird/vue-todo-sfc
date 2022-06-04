@@ -17,12 +17,12 @@
       <div class="mb-4">
         <AddTaskInput @added="taskAdded"/>
         <BaseCheckbox
-            class="my-4 p-4 text-gray-600 text-sm font-weight-100"
+            class="my-4 p-4 text-gray-600 font-weight-100"
             v-model="onlyPending"
         ><b>Only pending tasks</b>
         </BaseCheckbox>
       </div>
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <TodoListItem
             v-for="task in displayedTasks"
             :task="task"
@@ -42,11 +42,11 @@
 <script>
 let nextTaskId = 100;
 
-import BaseCheckbox from "./components/BaseCheckbox.vue";
-import AddTaskInput from "./components/AddTaskInput.vue";
-import TodoListItem from "./components/TodoListItem.vue";
-import SummaryLine from "./components/SummaryLine.vue"
-import ProjectList from "@/components/ProjectList";
+import BaseCheckbox from "@/components/base/BaseCheckbox.vue";
+import AddTaskInput from "@/components/task/AddTaskInput.vue";
+import TodoListItem from "@/components/task/TodoListItem.vue";
+import SummaryLine from "@/components/project/ProjectSummaryLine.vue"
+import ProjectList from "@/components/project/ProjectList";
 import {ADD_TASK, SET_ONLY_PENDING, UPDATE_TASK} from "@/store/mutation-types";
 import { mapGetters, mapState } from 'vuex';
 
