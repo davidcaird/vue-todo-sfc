@@ -1,10 +1,10 @@
 <template>
   <div
-    class="bg-white shadow-sm rounded-md text-gray-700 text-xs p-4"
+    class="bg-white shadow-sm rounded-md text-gray-700 text-xs flex-col"
     :class="{ 'opacity-25 line-through': task.done }"
   >
-    <div>{{ task.description }}</div>
-    <div class="py-4 bg-white">
+    <div class="p-4 border-b border-gray-100" >{{ task.description }}</div>
+    <div class="p-4 bg-white flex-grow">
       <BaseCheckbox
         @update:model-value="$emit('update:done', $event)"
         :model-value="done"
@@ -18,14 +18,18 @@
         >Prioritized</BaseCheckbox
       >
     </div>
+    <TaskListItemMenu />
   </div>
 </template>
 
 <script>
 import BaseCheckbox from "@/components/base/BaseCheckbox.vue";
+import { computed} from "vue";
+import TaskListItemMenu from "@/components/task/TodoListItemMenu";
 
 export default {
   components: {
+    TaskListItemMenu,
     BaseCheckbox,
   },
   props: {
@@ -33,8 +37,15 @@ export default {
       type: Object,
       required: true,
     },
+    projectId: Number,
     done: Boolean,
     priority: Boolean,
+  },
+  provide() {
+    return {
+      task: computed (() => this.task),
+      projectId: computed(()=> this.projectId)
+    }
   },
   emits: ["update:done", "update:priority"],
 };

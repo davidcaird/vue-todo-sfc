@@ -26,6 +26,7 @@
         <TodoListItem
             v-for="task in displayedTasks"
             :task="task"
+            :project-id="activeProjectId"
             :key="task.id"
             :done="task.done"
             :priority="task.priority"
