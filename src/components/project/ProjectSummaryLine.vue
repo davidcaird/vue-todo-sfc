@@ -26,7 +26,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters({
+    ...mapGetters('project', {
       tasks: "activeProjectTasks",
     }),
     // tasks() {

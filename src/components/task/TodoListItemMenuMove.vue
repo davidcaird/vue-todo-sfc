@@ -26,7 +26,7 @@ export default {
   inject: ["task", "projectId"],
   emits: ["closed"],
   methods: {
-    ...mapActions([MOVE_TASK]),
+    ...mapActions('project', [MOVE_TASK]),
     taskMoved(toProjectId){
       this[MOVE_TASK]({
         taskId: this.task.id,
@@ -38,7 +38,7 @@ export default {
   },
   computed: mapState({
     projects(state) {
-      return state.projects.filter(
+      return state.project.projects.filter(
           project => project.id !== this.projectId
       )
     }

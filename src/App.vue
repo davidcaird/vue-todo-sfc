@@ -49,7 +49,7 @@ import TodoListItem from "@/components/task/TodoListItem.vue";
 import SummaryLine from "@/components/project/ProjectSummaryLine.vue"
 import ProjectList from "@/components/project/ProjectList";
 import {ADD_TASK, SET_ONLY_PENDING, UPDATE_TASK} from "@/store/mutation-types";
-import { mapGetters, mapState } from 'vuex';
+import {mapGetters, mapMutations, mapState} from 'vuex';
 
 export default {
   name: "App",
@@ -64,8 +64,10 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["activeProjectId"]),
-    ...mapGetters({
+    ...mapState({
+      activeProjectId: (state) => state.project.activeProjectId
+    }),
+    ...mapGetters('project', {
       projects: "projectsWithStats",
       //activeProject: "activeProject",
       tasks: "activeProjectTasks",
@@ -84,20 +86,24 @@ export default {
     },
     onlyPending: {
       get() {
-        return this.$store.state.onlyPending;
+        return this.$store.state.application.onlyPending;
       },
       set(newValue) {
-        this.$store.commit(SET_ONLY_PENDING, newValue)
+        this.$store.commit(`application/${SET_ONLY_PENDING}`, newValue)
       }
-    },
-    activeProjectId() {
-      console.log('App activeProjectId');
-      return this.$store.state.activeProjectId;
     }
   },
   methods: {
+    ...mapMutations(
+        'application',  //namespace
+        [SET_ONLY_PENDING]
+    ),
+    ...mapMutations(
+        'project',
+        [ADD_TASK, UPDATE_TASK]
+    ),
     taskAdded(task) {
-      this.$store.commit(ADD_TASK, {
+      this.$store.commit(`project/${ADD_TASK}`, {
         projectId: this.activeProjectId,
         task: {
           id: nextTaskId++,
@@ -108,7 +114,7 @@ export default {
       });
     },
     taskUpdated(task, changes) {
-      this.$store.commit(UPDATE_TASK, {
+      this.$store.commit(`project/${UPDATE_TASK}`, {
         projectId: this.activeProjectId,
         task: Object.assign(task, changes)
       });
